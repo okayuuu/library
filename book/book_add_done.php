@@ -11,13 +11,16 @@ try {
   require_once('../../common/common.php');
   $post = sanitize($_POST);
 
+  require_once('../../common/pass.php');
+  $dbpass = dbpass();
+
   $book_title = $post['title'];  //本のタイトル
   $book_description = $post['description'];  //本の説明
 
   //データベース接続
   $dsn = 'mysql:dbname=library;host=localhost;charset=utf8';
-  $user = 'root';
-  $password = '';
+  $user = $dbpass['user'];
+  $password = $dbpass['pass'];
   $dbh = new PDO($dsn,$user,$password);
   $dbh -> setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 
