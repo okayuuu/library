@@ -1,15 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>書籍貸出管理</title>
-</head>
-<body>
 <?php
-
-echo "貸出可能書籍一覧<br>\n<br>\n";
-
 try {
+  $errmsg ="";
   require_once('../../common/pass.php');
   $dbpass = dbpass();
 
@@ -26,30 +17,39 @@ try {
   $stmt -> execute();
   $dbh = null;
 
-
-  //レコードを１行ずつ取り出して画面出力
-  while ($row = $stmt -> fetch(PDO::FETCH_ASSOC)) {
-    echo $row['code']."  ";
-    echo $row['name']."  ";
-    if ($row['stock'] != 0) {
-      $msg = "在庫あり";
-    } else {
-      $msg = "貸出中";
-    }
-    echo '<a href="book_data.php?code='.$row['code'].'">'.$msg.'</a>'."<br>\n";
-  }
-
   //ログイン実装後に出し分け
-  echo "<br>\n";
-  echo '<a href="book_kanri.php">書籍管理へ</a>';
-  echo "<br>\n";
-  echo '<a href="../top.php">トップメニューへ</a>';
+  $link1 = '<a href="book_kanri.php">書籍管理へ</a>'."<br>\n";
+  $link2 = '<a href="../top.php">トップメニューへ</a>'."<br>\n";
 } catch (\Exception $e) {
-  echo "エラー";
+  $errmsg = "エラー";
   //echo $e;
 }
-
+?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>書籍貸出管理</title>
+</head>
+<body>
+貸出可能書籍一覧<br><br>
+<?php
+//レコードを１行ずつ取り出して画面出力
+while ($row = $stmt -> fetch(PDO::FETCH_ASSOC)) {
+  echo $row['code']."  ";
+  echo $row['name']."  ";
+  if ($row['stock'] != 0) {
+    $msg = "在庫あり";
+  } else {
+    $msg = "貸出中";
+  }
+  echo '<a href="book_data.php?code='.$row['code'].'">'.$msg.'</a>'."<br>\n";
+}
  ?>
+<br>
+<?=$link1?>
+<?=$link2?>
+<?=$errmsg?>
 
 </body>
 </html>
