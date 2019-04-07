@@ -4,6 +4,10 @@ try {
   require_once('../../common/pass.php');
   $dbpass = dbpass();
 
+  $errmsg = "";
+  $link1 = "";
+  $link2 = "";
+
   //データベースへ接続
   $dsn = 'mysql:dbname=library;host=localhost;charset=utf8';
   $user = $dbpass['user'];

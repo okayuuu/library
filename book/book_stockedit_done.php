@@ -1,19 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>書籍貸出管理</title>
-</head>
-<body>
 <?php
-
 try {
-
   require_once('../../common/common.php');
   $post = sanitize($_POST);
 
   require_once('../../common/pass.php');
   $dbpass = dbpass();
+
+  $msg = "";
+  $link1 = "";
+  $link2 = "";
 
   if ($post['status'] == "貸出") {
     $status = 0;
@@ -36,20 +31,27 @@ try {
   $stmt -> execute($data);
   $dbh = null;
 
-
-  echo $post['status']."完了です。";
+  $msg = $post['status']."完了です。";
 
   //ログイン実装後に出し分け
-  echo "<br>\n";
-  echo '<a href="book_kanri.php">書籍管理へ</a>';
-  echo "<br>\n";
-  echo '<a href="../top.php">トップメニューへ</a>';
+  $link1 = '<a href="book_kanri.php">書籍管理へ</a>'."<br>\n";
+  $link2 = '<a href="../top.php">トップメニューへ</a>'."<br>\n";
 } catch (\Exception $e) {
-  echo "エラー";
+  $msg = "エラー";
   //echo $e;
 }
-
- ?>
-
+?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>書籍貸出管理</title>
+</head>
+<body>
+<br>
+<?=$msg?>
+<br>
+<?=$link1?>
+<?=$link2?>
 </body>
 </html>

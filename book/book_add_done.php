@@ -1,10 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>書籍貸出管理</title>
-</head>
-<body>
 <?php
 try {
   //エスケープ処理
@@ -16,6 +9,9 @@ try {
 
   $book_title = $post['title'];  //本のタイトル
   $book_description = $post['description'];  //本の説明
+  $msg = "";
+  $link1 ="";
+  $link2 = "";
 
   //データベース接続
   $dsn = 'mysql:dbname=library;host=localhost;charset=utf8';
@@ -34,18 +30,25 @@ try {
 
   $dbh = null;
 
-  echo "登録しました。<br>\n<br>\n";
-  echo '<a href="book_add.php">書籍登録</a>';
-  echo "<br>\n";
-  echo '<a href="book_kanri.php">書籍管理</a>';
+  $msg = "登録しました。";
+  $link1 = '<a href="book_add.php">書籍登録</a>'."<br>\n";
+  $link2 = '<a href="book_kanri.php">書籍管理</a>'."<br>\n";
 
 } catch (\Exception $e) {
-  echo "エラーが発生しました";
-  echo $e;
-  exit();
+  $msg = "エラーが発生しました";
+  //echo $e;
 }
-
-
- ?>
+?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>書籍貸出管理</title>
+</head>
+<body>
+<?=$msg?>
+<br>
+<?=$link1?>
+<?=$link2?>
 </body>
 </html>

@@ -4,6 +4,8 @@ try {
   $dbpass = dbpass();
 
   $errmsg = "";
+  $link1 = "";
+  $link2 = "";
 
   //データベースへ接続
   $dsn = 'mysql:dbname=library;host=localhost;charset=utf8';
@@ -41,6 +43,7 @@ try {
 <title>書籍貸出管理</title>
 </head>
 <body>
+<?=$errmsg?>
 書籍詳細<br><br>
 <?=$row['name']?><br>
 <?=$row['description']?><br>
@@ -52,6 +55,5 @@ try {
 <br>
 <?=$link1?>
 <?=$link2?>
-<?=$errmsg?>
 </body>
 </html>
