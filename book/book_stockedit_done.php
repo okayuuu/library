@@ -3,6 +3,8 @@ try {
   require_once('../../common/common.php');
   $post = sanitize($_POST);
 
+  var_dump($post['code']);
+
   require_once('../../common/pass.php');
   $dbpass = dbpass();
 
@@ -24,11 +26,13 @@ try {
   $dbh -> setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 
   //在庫数を変更する
-  $sql = 'UPDATE book_list SET stock=? WHERE code=?';
-  $stmt = $dbh -> prepare($sql);
-  $data[] = $status;
-  $data[] = $post['code'];
-  $stmt -> execute($data);
+  foreach ($post['code'] as $key => $value) {
+    $sql = 'UPDATE book_list SET stock=? WHERE code=?';
+    $stmt = $dbh -> prepare($sql);
+    $data[0] = $status;
+    $data[1] = $value;
+    $stmt -> execute($data);
+  }
   $dbh = null;
 
   $msg = $post['status']."完了です。";
@@ -38,7 +42,7 @@ try {
   $link2 = '<a href="../top.php">トップメニューへ</a>'."<br>\n";
 } catch (\Exception $e) {
   $msg = "エラー";
-  //echo $e;
+  echo $e;
 }
 ?>
 <!DOCTYPE html>

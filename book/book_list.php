@@ -37,19 +37,43 @@ try {
 </head>
 <body>
 貸出可能書籍一覧<br><br>
+<form method="post" action="book_stockedit_multiplecheck.php">
+<input type="submit" name="status" value="まとめて借りる"><input type="submit" name="status" value="まとめて返す">
+<table border="1">
+<tr>
+  <td>タイトル</td>
+  <td>在庫</td>
+  <td>まとめて借りる</td>
+  <td>まとめて返す</td>
+</tr>
 <?php
 //レコードを１行ずつ取り出して画面出力
 while ($row = $stmt -> fetch(PDO::FETCH_ASSOC)) {
-  echo $row['code']."  ";
-  echo $row['name']."  ";
-  if ($row['stock'] != 0) {
-    $msg = "在庫あり";
-  } else {
-    $msg = "貸出中";
-  }
-  echo '<a href="book_data.php?code='.$row['code'].'">'.$msg.'</a>'."<br>\n";
-}
- ?>
+  ?>
+<tr>
+  <td><?=$row['name']?></td>
+  <td>
+  <?php if ($row['stock'] != 0): ?>
+  <a href="book_data.php?code=<?=$row['code']?>">在庫あり</a>
+  <?php else: ?>
+  <a href="book_data.php?code=<?=$row['code']?>">貸出中</a>
+  <?php endif; ?></td>
+  <td>
+  <?php if ($row['stock'] != 0): ?>
+  <input type="checkbox" name="code[]" value="<?=$row['code']?>"></inpu>
+  <?php else: ?>
+  <?php endif; ?></td>
+  <td>
+  <?php if ($row['stock'] != 0): ?>
+  <?php else: ?>
+  <input type="checkbox" name="code[]" value="<?=$row['code']?>"></inpu>
+  <?php endif; ?>
+  </td>
+</tr>
+<?php }
+?>
+</table>
+</form>
 <br>
 <?=$link1?>
 <?=$link2?>
